@@ -4,10 +4,11 @@ key_name: tee-aws-keypair
 instance_type: t3.micro
 security_group: default
 region: us-east-1
-ec2_access_key: <AWS-ACCESS-KEY>  # From vault as defined
-ec2_secret_key: <AWS-SECRET-ACCESS-KEY>  # From vault as defined      
+#ec2_access_key: <AWS-ACCESS-KEY>  # From vault as defined
+#ec2_secret_key: <AWS-SECRET-ACCESS-KEY>  # From vault as defined     
+
 assign_public_ip: true
 ec2_instances:
   - { image: "ami-07860a2d7eb515d9a", name: "manage-node-1" }
-  #- { image: "ami-0360c520857e3138f", name: "manage-node-2" }
-  #- { image: "ami-0360c520857e3138f", name: "manage-node-3" }
+  - { image: "ami-0360c520857e3138f", name: "manage-node-2" }
+  - { image: "ami-0360c520857e3138f", name: "manage-node-3" }

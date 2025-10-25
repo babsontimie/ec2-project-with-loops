@@ -1,0 +1,40 @@
+---
+- name:  This ansible program allows installed software version to be updated to the latest version if found but then proceeds to install docker if not installed.  software not manadatory 
+  hosts: onprem
+  become: true
+  tasks: 
+    - name: Uninstall Docker
+      apt: 
+         name: docker.io
+         state: absent
+    - name: Update openssl and openssh to the latest
+      apt:
+        name: "{{ item }}"
+        state: latest
+      loop:
+        - openssl
+        - openssh
+      register: output
+      ignore_errors: yes      
+    - name: Get the output of the ignore_errors
+      debug:
+        var: output
+
+    - name: Verify if Docker is installed or not
+      command: docker --version
+      register: output
+      ignore_errors: yes
+    - name: Get the output of the ignore_errors
+      debug:
+        var: output      
+    - name: Install Docker
+      apt: 
+         name: docker.io
+         state: present
+      when:
+        output.failed
+
+    - name: Verify if Docker is installed or not
+      command: docker --version
+  
+
